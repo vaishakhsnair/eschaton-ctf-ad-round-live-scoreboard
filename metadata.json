@@ -1,0 +1,5 @@
+{
+  "name": "CyberScore: CTF Liveboard",
+  "description": "A high-energy, interactive scoreboard for Attack-Defense CTF competitions with real-time animations and detailed team analytics.",
+  "requestFramePermissions": []
+}

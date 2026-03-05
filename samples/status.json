@@ -1,0 +1,1 @@
+{"ticks":[9,10,11,12,13],"teams":[{"id":2,"nop":false,"name":"team1","ticks":[[4],[4],[4],[4],[4]]},{"id":3,"nop":false,"name":"team2","ticks":[[4],[4],[4],[4],[4]]},{"id":4,"nop":false,"name":"team3","ticks":[[4],[4],[4],[4],[4]]}],"services":["ping"],"status-descriptions":{"0":"up","1":"down","2":"faulty","3":"flag not found","4":"recovering","5":"timeout","-1":"not checked"}}
