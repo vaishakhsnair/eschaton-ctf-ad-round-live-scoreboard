@@ -156,16 +156,26 @@ export default function App() {
       return;
     }
 
-    let currentIndex = 0;
+    let currentIndex = -1; // -1 represents the main scoreboard
     const interval = window.setInterval(() => {
       const teamPoolSize = Math.min(gameState.teams.length, 5);
-      if (teamPoolSize <= 0) {
-        return;
+      
+      if (currentIndex === -1) {
+        // We are on scoreboard, move to first team
+        const team = gameState.teams[0];
+        setSelectedTeamId(team.id);
+        currentIndex = 0;
+      } else if (currentIndex < teamPoolSize - 1) {
+        // Move to next team
+        currentIndex += 1;
+        const team = gameState.teams[currentIndex];
+        setSelectedTeamId(team.id);
+      } else {
+        // Back to scoreboard
+        setSelectedTeamId(null);
+        currentIndex = -1;
       }
-      const team = gameState.teams[currentIndex % teamPoolSize];
-      setSelectedTeamId(team.id);
-      currentIndex += 1;
-    }, 5000);
+    }, 10000);
 
     return () => window.clearInterval(interval);
   }, [autoFocus, gameState.teams, isViewLocked]);

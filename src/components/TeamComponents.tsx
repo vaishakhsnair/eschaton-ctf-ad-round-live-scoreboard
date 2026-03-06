@@ -41,9 +41,9 @@ export const TeamRow: React.FC<TeamRowProps> = ({ team, rank, onSelect, isExpand
       </div>
 
       {/* Services Summary */}
-      <div className="col-span-4 flex gap-1">
+      <div className="col-span-4 flex gap-1 flex-wrap overflow-hidden h-6 items-center">
         {team.services.map((svc) => (
-          <ServiceStatus key={svc.id} status={svc.status} name={svc.name} compact />
+          <ServiceStatus key={svc.id} status={svc.status} name={svc.name} compact showName />
         ))}
       </div>
 
@@ -162,7 +162,7 @@ export const TeamDetail: React.FC<{ team: Team; onClose: () => void; isLocked?: 
                   RANK #{team.rank}
                 </span>
                 <span className="px-4 py-1 bg-white/5 text-gray-400 border border-white/10 rounded-lg font-mono text-sm truncate">
-                  10.10.{team.id}.1
+                  10.66.{team.id}.100
                 </span>
               </div>
               <h1 className="text-6xl font-display font-bold uppercase tracking-tighter text-white truncate">
