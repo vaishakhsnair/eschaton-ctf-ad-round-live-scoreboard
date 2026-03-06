@@ -151,34 +151,48 @@ export default function App() {
   const selectedTeam: Team | null =
     selectedTeamId === null ? null : gameState.teams.find((team) => team.id === selectedTeamId) || null;
 
+  const autoFocusIndexRef = useRef(-1);
+
   useEffect(() => {
     if (!autoFocus || isViewLocked || gameState.teams.length === 0) {
       return;
     }
 
-    let currentIndex = -1; // -1 represents the main scoreboard
     const interval = window.setInterval(() => {
       const teamPoolSize = Math.min(gameState.teams.length, 5);
       
-      if (currentIndex === -1) {
+      if (autoFocusIndexRef.current === -1) {
         // We are on scoreboard, move to first team
         const team = gameState.teams[0];
         setSelectedTeamId(team.id);
-        currentIndex = 0;
-      } else if (currentIndex < teamPoolSize - 1) {
+        autoFocusIndexRef.current = 0;
+      } else if (autoFocusIndexRef.current < teamPoolSize - 1) {
         // Move to next team
-        currentIndex += 1;
-        const team = gameState.teams[currentIndex];
+        autoFocusIndexRef.current += 1;
+        const team = gameState.teams[autoFocusIndexRef.current];
         setSelectedTeamId(team.id);
       } else {
         // Back to scoreboard
         setSelectedTeamId(null);
-        currentIndex = -1;
+        autoFocusIndexRef.current = -1;
       }
     }, 10000);
 
     return () => window.clearInterval(interval);
   }, [autoFocus, gameState.teams, isViewLocked]);
+
+  // Sync index ref if selectedTeamId changes externally (e.g. user clicks)
+  useEffect(() => {
+    if (!autoFocus) return;
+    if (selectedTeamId === null) {
+      autoFocusIndexRef.current = -1;
+    } else {
+      const idx = gameState.teams.findIndex(t => t.id === selectedTeamId);
+      if (idx !== -1 && idx < 5) {
+        autoFocusIndexRef.current = idx;
+      }
+    }
+  }, [selectedTeamId, autoFocus, gameState.teams]);
 
   useEffect(() => {
     if (appliedTeamUrlParamRef.current || gameState.teams.length === 0) {
