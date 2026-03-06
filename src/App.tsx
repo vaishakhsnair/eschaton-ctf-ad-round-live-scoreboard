@@ -152,24 +152,32 @@ export default function App() {
     selectedTeamId === null ? null : gameState.teams.find((team) => team.id === selectedTeamId) || null;
 
   const autoFocusIndexRef = useRef(-1);
+  const gameStateRef = useRef(gameState);
 
   useEffect(() => {
-    if (!autoFocus || isViewLocked || gameState.teams.length === 0) {
+    gameStateRef.current = gameState;
+  }, [gameState]);
+
+  useEffect(() => {
+    if (!autoFocus || isViewLocked) {
       return;
     }
 
     const interval = window.setInterval(() => {
-      const teamPoolSize = Math.min(gameState.teams.length, 5);
+      const teams = gameStateRef.current.teams;
+      if (teams.length === 0) return;
+
+      const teamPoolSize = Math.min(teams.length, 5);
       
       if (autoFocusIndexRef.current === -1) {
         // We are on scoreboard, move to first team
-        const team = gameState.teams[0];
+        const team = teams[0];
         setSelectedTeamId(team.id);
         autoFocusIndexRef.current = 0;
       } else if (autoFocusIndexRef.current < teamPoolSize - 1) {
         // Move to next team
         autoFocusIndexRef.current += 1;
-        const team = gameState.teams[autoFocusIndexRef.current];
+        const team = teams[autoFocusIndexRef.current];
         setSelectedTeamId(team.id);
       } else {
         // Back to scoreboard
@@ -179,7 +187,7 @@ export default function App() {
     }, 10000);
 
     return () => window.clearInterval(interval);
-  }, [autoFocus, gameState.teams, isViewLocked]);
+  }, [autoFocus, isViewLocked]);
 
   // Sync index ref if selectedTeamId changes externally (e.g. user clicks)
   useEffect(() => {
