@@ -3,7 +3,7 @@ import { GameState, LiveApiResponse, LiveMeta, Team } from './types';
 import { TeamRow, TeamDetail } from './components/TeamComponents';
 import { Ticker } from './components/Ticker';
 import { AnimatePresence } from 'motion/react';
-import { Clock, Play, Pause, Maximize2, Minimize2, Terminal } from 'lucide-react';
+import { Clock, Play, Pause, Maximize2, Minimize2 } from 'lucide-react';
 import { cn } from './lib/utils';
 import eventLogo from '../mcsc-logo.png';
 
@@ -12,16 +12,6 @@ const EMPTY_GAME_STATE: GameState = {
   teams: [],
   events: [],
 };
-
-const CHALLENGES = [
-  { name: "Arena", port: 4044 },
-  { name: "Codex", port: 6666 },
-  { name: "Campuslink-2", port: 3000 },
-  { name: "ehuddle", port: 18080 },
-  { name: "konvert", port: 9090 },
-  { name: "Beacon", port: 4444 },
-  { name: "Service 7", port: "TBD" },
-];
 
 const parsedPollInterval = Number(import.meta.env.VITE_LIVE_SCORE_UI_POLL_INTERVAL_MS || 2500);
 const UI_POLL_INTERVAL_MS = Number.isFinite(parsedPollInterval) && parsedPollInterval > 0 ? parsedPollInterval : 2500;
@@ -337,22 +327,6 @@ export default function App() {
             </div>
           </div>
         </header>
-
-        {/* Challenge Info Bar */}
-        <div className="mb-8 overflow-x-auto no-scrollbar">
-          <div className="flex items-center gap-4 min-w-max pb-2">
-            <div className="flex items-center gap-2 px-4 py-2 bg-cyber-blue/10 border border-cyber-blue/30 rounded-lg shrink-0">
-              <Terminal className="w-4 h-4 text-cyber-blue" />
-              <span className="font-mono text-xs font-bold text-cyber-blue uppercase tracking-widest">CHALLENGES:</span>
-            </div>
-            {CHALLENGES.map((ch) => (
-              <div key={ch.name} className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg hover:border-white/20 transition-colors">
-                <span className="font-display font-bold text-sm text-gray-300">{ch.name}:</span>
-                <span className="font-mono text-xs font-bold text-cyber-green">{ch.port}</span>
-              </div>
-            ))}
-          </div>
-        </div>
 
         <div className="mb-4 font-mono text-xs uppercase tracking-widest text-gray-500 flex flex-wrap gap-6">
           <span>Services Up: <span className="text-cyber-green">{summary.up}</span></span>

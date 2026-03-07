@@ -139,11 +139,11 @@ function buildLiveState(scoreboard, status, previousState) {
 
     if (lastTickChange.defense < 0) {
       events.push(
-        createEvent('attack', `[${rawTeam.name}] defense dropped by ${Math.abs(lastTickChange.defense).toFixed(1)}`)
+        createEvent('attack', `[${rawTeam.name}] defense dropped by ${Math.abs(lastTickChange.defense).toFixed(2)}`)
       );
     }
     if (lastTickChange.sla > 0) {
-      events.push(createEvent('sla_up', `[${rawTeam.name}] SLA increased by ${lastTickChange.sla.toFixed(1)}`));
+      events.push(createEvent('sla_up', `[${rawTeam.name}] SLA increased by ${lastTickChange.sla.toFixed(2)}`));
     }
 
     const previousRank = previousTeam?.rank;

@@ -50,16 +50,16 @@ export const TeamRow: React.FC<TeamRowProps> = ({ team, rank, onSelect, isExpand
       {/* Stats */}
       <div className="col-span-5 grid grid-cols-4 gap-4 text-right font-mono text-sm items-center">
         <div className="text-cyber-green">
-          {team.offense.toFixed(0)}
+          {team.offense.toFixed(2)}
         </div>
         <div className={cn(
           "transition-colors duration-300",
           isAttacked ? "text-cyber-red font-bold" : "text-gray-300"
         )}>
-          {team.defense.toFixed(0)}
+          {team.defense.toFixed(2)}
         </div>
         <div className="text-cyber-blue flex items-center justify-end gap-1">
-          {team.sla.toFixed(0)}
+          {team.sla.toFixed(2)}
           {isSlaUp && (
             <motion.div
               initial={{ opacity: 0, y: 5 }}
@@ -72,7 +72,7 @@ export const TeamRow: React.FC<TeamRowProps> = ({ team, rank, onSelect, isExpand
           )}
         </div>
         <div className="font-bold text-white text-base">
-          {team.total.toFixed(0)}
+          {team.total.toFixed(2)}
         </div>
       </div>
 
@@ -172,7 +172,7 @@ export const TeamDetail: React.FC<{ team: Team; onClose: () => void; isLocked?: 
             <div className="text-right">
                 <div className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-2">Total Score</div>
                 <div className="text-7xl font-mono font-bold text-white tabular-nums">
-                    <NumberTicker value={team.total} />
+                    <NumberTicker value={team.total} decimalPlaces={2} />
                 </div>
             </div>
         </div>
@@ -251,7 +251,7 @@ const StatCardBig = ({ label, value, icon, color, borderColor, delta, pulseColor
         <div>
             <div className="font-mono text-sm tracking-[0.2em] text-gray-400 mb-1">{label}</div>
             <div className={cn("text-6xl font-mono font-bold tabular-nums tracking-tight", color)}>
-                <NumberTicker value={value} decimalPlaces={0} />
+                <NumberTicker value={value} decimalPlaces={2} />
             </div>
         </div>
     </div>
@@ -259,7 +259,7 @@ const StatCardBig = ({ label, value, icon, color, borderColor, delta, pulseColor
     {delta !== undefined && delta !== 0 && (
       <div className={cn("flex flex-col items-end font-mono")}>
          <div className={cn("text-2xl font-bold", deltaColor ? deltaColor : (delta > 0 ? "text-cyber-green" : "text-cyber-red"))}>
-            {delta > 0 ? "+" : ""}{delta.toFixed(0)}
+            {delta > 0 ? "+" : ""}{delta.toFixed(2)}
          </div>
          <div className="text-xs text-gray-500 uppercase tracking-widest">Last Tick</div>
       </div>
@@ -274,11 +274,11 @@ const ServiceCardBig: React.FC<{ service: Service }> = ({ service }) => (
       <div className="flex gap-6 font-mono text-xs text-gray-500">
         <span className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-cyber-green"></span>
-            OFF: {service.offense.toFixed(0)}
+            OFF: {service.offense.toFixed(2)}
         </span>
         <span className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-cyber-red"></span>
-            DEF: {service.defense.toFixed(0)}
+            DEF: {service.defense.toFixed(2)}
         </span>
       </div>
     </div>
