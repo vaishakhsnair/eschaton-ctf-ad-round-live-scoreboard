@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { GameState, LiveApiResponse, LiveMeta, Team } from './types';
 import { TeamRow, TeamDetail } from './components/TeamComponents';
 import { Ticker } from './components/Ticker';
+import { ToastContainer } from './components/NotificationToast';
 import { AnimatePresence } from 'motion/react';
 import { Clock, Play, Pause, Maximize2, Minimize2 } from 'lucide-react';
 import { cn } from './lib/utils';
@@ -157,7 +158,7 @@ export default function App() {
       const teams = gameStateRef.current.teams;
       if (teams.length === 0) return;
 
-      const teamPoolSize = Math.min(teams.length, 5);
+      const teamPoolSize = Math.min(teams.length, 10);
       
       if (autoFocusIndexRef.current === -1) {
         // We are on scoreboard, move to first team
@@ -186,7 +187,7 @@ export default function App() {
       autoFocusIndexRef.current = -1;
     } else {
       const idx = gameState.teams.findIndex(t => t.id === selectedTeamId);
-      if (idx !== -1 && idx < 5) {
+      if (idx !== -1 && idx < 10) {
         autoFocusIndexRef.current = idx;
       }
     }
@@ -379,6 +380,7 @@ export default function App() {
       </div>
 
       <Ticker events={gameState.events} />
+      <ToastContainer events={gameState.events} />
 
       <AnimatePresence>
         {selectedTeam && (
