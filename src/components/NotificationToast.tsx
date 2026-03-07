@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GameEvent } from '../types';
 import { AlertCircle, CheckCircle2, ShieldAlert, TrendingUp, Award, X } from 'lucide-react';
@@ -113,9 +113,9 @@ export const ToastContainer: React.FC<{ events: GameEvent[] }> = ({ events }) =>
     }
   }, [events]);
 
-  const removeToast = (id: string) => {
+  const removeToast = useCallback((id: string) => {
     setVisibleEvents(prev => prev.filter(e => e.id !== id));
-  };
+  }, []);
 
   return (
     <div className="fixed top-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none">
